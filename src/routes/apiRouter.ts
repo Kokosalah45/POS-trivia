@@ -1,22 +1,22 @@
 import { Router } from "express";
-import wordRouter from "./wordRouter";
+import wordsRouter from "./wordsRouter";
 import { validateCache } from "../middlewares";
 const apiRouter = Router();
 
-apiRouter.use("/word", validateCache, wordRouter);
+apiRouter.use("/words", validateCache, wordsRouter);
 
 apiRouter.get("/", (req, res) => {
-  const domain =
+  const hostName =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000"
       : process.env.RAILWAY_STATIC_URL;
   res.json({
     words: {
-      href: `${domain}/api/word`,
+      href: `${hostName}/api/word`,
       type: "GET",
     },
     rank: {
-      href: `${domain}/api/rank`,
+      href: `${hostName}/api/rank`,
       type: "POST",
     },
   });
