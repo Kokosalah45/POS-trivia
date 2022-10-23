@@ -12,7 +12,7 @@ apiRouter.get("/", (req, res) => {
       : "https://" + process.env.RAILWAY_STATIC_URL;
   res.json({
     words: {
-      href: `${hostName}/api/word`,
+      href: `${hostName}/api/words`,
       type: "GET",
     },
     rank: {
