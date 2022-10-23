@@ -9,7 +9,7 @@ apiRouter.get("/", (req, res) => {
   const hostName =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000"
-      : process.env.RAILWAY_STATIC_URL;
+      : "https://" + process.env.RAILWAY_STATIC_URL;
   res.json({
     words: {
       href: `${hostName}/api/word`,
