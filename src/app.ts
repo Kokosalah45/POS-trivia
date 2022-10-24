@@ -6,12 +6,10 @@ import apiRouter from "./routes/apiRouter";
 import path from "path";
 
 const app = express();
-app.use("/api", apiRouter);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use("/api", apiRouter);
 app.get("/", async (req: Request, res: Response) => {
   // for now
   res.redirect("/api");

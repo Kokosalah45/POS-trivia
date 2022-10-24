@@ -1,2 +1,3 @@
 import shuffleArray from "./shuffleArray";
-export { shuffleArray };
+import binarySearchFirstOccur from "./binarySearchFirstOccur";
+export { shuffleArray, binarySearchFirstOccur };

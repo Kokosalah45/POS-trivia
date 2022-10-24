@@ -1,3 +1,3 @@
-import validateCache from "./vaildateCache";
-
-export { validateCache };
+import loadFromWordListCache from "./loadFromWordListCache";
+import loadScores from "./loadScores";
+export { loadFromWordListCache, loadScores };

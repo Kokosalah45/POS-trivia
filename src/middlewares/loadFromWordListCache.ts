@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import axios from "axios";
-import { wordListCacheType, promiseData } from "../types";
+import { wordListCacheType, worldListPromise } from "../types/index";
 const wordListCache: wordListCacheType = {
   words: {
     noun: [],
@@ -11,31 +11,29 @@ const wordListCache: wordListCacheType = {
   currentCount: null,
 };
 
-export default async function validateCache(
+export default async function loadWordListFromCache(
   req: Request,
-  res: Response,
+  _: Response,
   next: NextFunction
 ): Promise<void> {
   const { data } = await axios.get(
-    `http://localhost:${process.env.PORT || 5000}/db.json`
+    `http://localhost:${process.env.PORT || 5000}/wordsList.json`
   );
 
-  const promiseData = data as promiseData;
+  const { wordList } = data as worldListPromise;
   if (
     !wordListCache.currentCount ||
-    promiseData.wordList.length < wordListCache.currentCount
+    wordList.length < wordListCache.currentCount
   ) {
-    promiseData.wordList.forEach((word) =>
-      wordListCache.words[word.pos].push(word)
-    );
+    wordList.forEach((word) => wordListCache.words[word.pos].push(word));
   } else {
-    const lastEntry = promiseData.wordList.pop();
+    const lastEntry = wordList.pop();
     if (lastEntry) {
       wordListCache.words[lastEntry.pos].push(lastEntry);
     }
   }
-  //@ts-ignore
-  req.wordList = wordListCache.words;
+
+  req.wordsList = wordListCache.words;
 
   next();
 }

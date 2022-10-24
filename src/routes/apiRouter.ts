@@ -1,9 +1,11 @@
 import { Router } from "express";
 import wordsRouter from "./wordsRouter";
-import { validateCache } from "../middlewares";
+import rankRouter from "./rankRouter";
+
 const apiRouter = Router();
 
-apiRouter.use("/words", validateCache, wordsRouter);
+apiRouter.use("/words", wordsRouter);
+apiRouter.use("/rank", rankRouter);
 
 apiRouter.get("/", (req, res) => {
   const hostName =
