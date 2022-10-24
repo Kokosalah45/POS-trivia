@@ -26,11 +26,13 @@ export default async function loadWordListFromCache(
     wordList.length < wordListCache.currentCount
   ) {
     wordList.forEach((word) => wordListCache.words[word.pos].push(word));
-  } else {
-    const lastEntry = wordList.pop();
-    if (lastEntry) {
-      wordListCache.words[lastEntry.pos].push(lastEntry);
-    }
+    wordListCache.currentCount = wordList.length;
+  } else if (wordList.length > wordListCache.currentCount) {
+    const newEntries = wordList.slice(
+      wordList.length - (wordList.length - wordListCache.currentCount)
+    );
+    newEntries.forEach((word) => wordListCache.words[word.pos].push(word));
+    wordListCache.currentCount += newEntries.length;
   }
 
   req.wordsList = wordListCache.words;

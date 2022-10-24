@@ -3,7 +3,9 @@ import { Request, Response } from "express";
 export default async function getRandomWords(req: Request, res: Response) {
   //@ts-ignore
   const allWords = req.wordsList;
-  let wordsTuple = await Promise.all([
+
+  let wordsTuple = [];
+  wordsTuple = await Promise.all([
     shuffleArray(allWords!.noun),
     shuffleArray(allWords!.adverb),
     shuffleArray(allWords!.adjective),
@@ -19,11 +21,13 @@ export default async function getRandomWords(req: Request, res: Response) {
   //2 2 0 4  or 2 2 4 4 or 0 0 4 4
   while (
     restOfWords.length < 6 &&
-    wordsTuple.filter((pos) => pos.length !== 0).length !== 0
+    wordsTuple.filter((pos) => pos.length !== 0).length > 0
   ) {
     const randomWord =
       wordsTuple[Math.floor(Math.random() * wordsTuple.length)].shift();
     restOfWords.push(randomWord);
+
+    //console.log(wordsTuple, "\n\n\n\n");
     //@ts-ignore
     wordsTuple = wordsTuple.filter((pos) => pos.length !== 0);
   }
