@@ -2,12 +2,12 @@ import { shuffleArray } from "../../utils";
 import { Request, Response } from "express";
 export default async function getRandomWords(req: Request, res: Response) {
   //@ts-ignore
-  const allWords = req.wordList;
-  let wordsTuple = await Promise.all([
-    shuffleArray(allWords.noun),
-    shuffleArray(allWords.adverb),
-    shuffleArray(allWords.adjective),
-    shuffleArray(allWords.verb),
+  const allWords = req.wordsList;
+  const wordsTuple = await Promise.all([
+    shuffleArray(allWords!.noun),
+    shuffleArray(allWords!.adverb),
+    shuffleArray(allWords!.adjective),
+    shuffleArray(allWords!.verb),
   ]);
   const guaranteed4Words = [];
   guaranteed4Words.push(wordsTuple[0].shift());
